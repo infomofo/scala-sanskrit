@@ -32,11 +32,20 @@ object SanskritLetter {
     SanskritLetter("ञ", "nya", "ɲə"),
     SanskritLetter("स", "sa", "sɐ"),
     SanskritLetter("म", "ma", "mɐ"),
-    SanskritLetter("ति", "s", "mɐ"),
-    SanskritLetter("a", "ti", "t̪ih"),
+    SanskritLetter("ति", "s", "s"),
   )
 
-  def lookupLetter(letter: String): SanskritLetter = {
-    letters.find(_.sanskrit.equals(letter)).get
+  def lookupLetter(letter: String): Option[SanskritLetter] = {
+    letters.find(_.sanskrit.equals(letter))
+  }
+
+  def matchFirstLetter(word: String): (Option[SanskritLetter], String) = {
+    word match {
+      case s"$letter$remainder" if letters.exists(_.sanskrit.equals(letter)) =>
+        (lookupLetter(letter), remainder)
+      case _ =>
+        ???
+//        (None, word)
+    }
   }
 }
